@@ -40,12 +40,11 @@ class Solution39 {
             return
         }
 
-        for (i in start .. candidates.lastIndex) {
-            val candidate = candidates[i]
-            val newTarget = target - candidate
-            val newCurrent = current + candidate
-            find(candidates, newTarget, newCurrent, ans, i)
-        }
+
+        val candidate = candidates[start]
+        val newTarget = target - candidate
+        find(candidates, newTarget, current.plus(candidate), ans, start)
+
 
         find(candidates, target, current, ans, start + 1)
     }
