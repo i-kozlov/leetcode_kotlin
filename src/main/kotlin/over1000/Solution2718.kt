@@ -4,46 +4,49 @@ import other.TreeNode
 
 class Solution2718 {
 
+    //You are given an integer n and a 0-indexed 2D array queries where queries[i] = [typei, indexi, vali].
     fun matrixSumQueries(n: Int, queries: Array<IntArray>): Long {
-//        var sum = 0L
-        val matrix = Array(n) { Array<Pair<Int, Boolean>>(n) { 0 to false } }
-        var modificationsCount = 0
+        var sum = 0L
+        val cellToModify = n * n
+        val visited = mutableSetOf<Pair<Int, Int>>()
 
         for (i in queries.lastIndex downTo 0) {
-            if (modificationsCount >= n * n) break
+            if (visited.size == cellToModify) break
+
 
             val (type, index, value) = queries[i]
 
             when (type) {
                 //row update
                 0 -> {
-                    val row = matrix[index]
-                    for (cellIDx in row.indices) {
-                        if (row[cellIDx].second.not()) {
-                            row[cellIDx] = value to true
-                            modificationsCount++
-                        }
+
+                    val x = index
+                    for (y in 0..n - 1) {
+                        if (visited.contains(x to y)) continue
+                        visited.add(x to y)
+                        sum += value
                     }
 
                 }
 
                 1 -> {
-                    for (row in matrix) {
-                        if (row[index].second.not()) {
-                            row[index] = value to true
-                            modificationsCount++
-                        }
+                    val y = index
+                    for (x in 0..n - 1) {
+                        if (visited.contains(x to y)) continue
+                        visited.add(x to y)
+                        sum += value
                     }
                 }
             }
         }
 
 
-        return matrix.map { it.map { it.first }.sum().toLong() }.sum()
+        return sum
     }
 
     companion object {
-        @JvmStatic fun main(args : Array<String>) {
+        @JvmStatic
+        fun main(args: Array<String>) {
 
         }
     }
