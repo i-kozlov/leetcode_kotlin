@@ -2,14 +2,14 @@ package before100
 
 class Solution78 {
 
-    fun subsets(nums: IntArray): List<List<Int>> {
+    fun subsets_v1(nums: IntArray): List<List<Int>> {
         val ans = mutableListOf<List<Int>>()
 
-        dfs(nums, ans, mutableListOf<Int>(), 0)
+        dfs_v1(nums, ans, mutableListOf<Int>(), 0)
         return ans//.distinct()
     }
 
-    private fun dfs(nums: IntArray, ans: MutableList<List<Int>>, current: List<Int>, i: Int) {
+    private fun dfs_v1(nums: IntArray, ans: MutableList<List<Int>>, current: List<Int>, i: Int) {
 
         if (i >= nums.size) {
             ans.add(current)
@@ -17,11 +17,32 @@ class Solution78 {
         }
 
         //left decision - include nums[i] current append
-        dfs(nums, ans, current.plus(nums[i]), i + 1)
+        dfs_v1(nums, ans, current.plus(nums[i]), i + 1)
         //right decision - NOT include nums[i]
         //current pop back
-        dfs(nums, ans, current, i + 1)
+        dfs_v1(nums, ans, current, i + 1)
 
+    }
+
+    fun subsets(nums: IntArray): List<List<Int>> {
+        val ans = mutableListOf<List<Int>>()
+
+        val current = mutableListOf<Int>()
+
+        fun dsf(i: Int) {
+            if (i >= nums.size) {
+                ans.add(current.toList())
+                return
+            }
+
+            current.add(nums[i])
+            dsf(i + 1)
+            current.remove(nums[i])
+            dsf(i + 1)
+        }
+
+        dsf(0)
+        return ans//.sortedBy { it.size }
     }
 
 
