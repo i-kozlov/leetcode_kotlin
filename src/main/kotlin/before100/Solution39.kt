@@ -28,25 +28,26 @@ class Solution39 {
     fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
         val ans = mutableListOf<List<Int>>()
 
-        find(candidates, target, emptyList(), ans, 0)
-        return ans//.distinct()
+        dfs(candidates, target, emptyList(), ans, 0)
+        return ans
     }
 
-    fun find(candidates: IntArray, target: Int, current: List<Int>, ans: MutableList<List<Int>>, start: Int) {
+    fun dfs(candidates: IntArray, target: Int, current: List<Int>, ans: MutableList<List<Int>>, start: Int) {
         if (target < 0 || start >= candidates.size) return
         if (target == 0) {
             ans.add(current)
-//            ans.add(current.sorted())
             return
         }
 
 
         val candidate = candidates[start]
         val newTarget = target - candidate
-        find(candidates, newTarget, current.plus(candidate), ans, start)
+        //if current is mutable we can use current.add(candidate)
+        dfs(candidates, newTarget, current.plus(candidate), ans, start)
+        //add pop back here
 
 
-        find(candidates, target, current, ans, start + 1)
+        dfs(candidates, target, current, ans, start + 1)
     }
 
     companion object {
