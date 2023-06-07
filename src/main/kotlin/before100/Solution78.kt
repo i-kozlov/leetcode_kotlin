@@ -9,16 +9,18 @@ class Solution78 {
         return ans//.distinct()
     }
 
-    private fun dfs(nums: IntArray, ans: MutableList<List<Int>>, current: List<Int>, start: Int) {
+    private fun dfs(nums: IntArray, ans: MutableList<List<Int>>, current: List<Int>, i: Int) {
 
-        if (start >= nums.size) {
+        if (i >= nums.size) {
             ans.add(current)
             return
         }
 
-
-        dfs(nums, ans, current.plus(nums[start]), start + 1)
-        dfs(nums, ans, current, start + 1)
+        //left decision - include nums[i] current append
+        dfs(nums, ans, current.plus(nums[i]), i + 1)
+        //right decision - NOT include nums[i]
+        //current pop back
+        dfs(nums, ans, current, i + 1)
 
     }
 
