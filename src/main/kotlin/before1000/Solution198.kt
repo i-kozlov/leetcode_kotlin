@@ -1,6 +1,6 @@
 class Solution198 {
 
-    fun rob(nums: IntArray): Int {
+    fun rob_v3(nums: IntArray): Int {
         var counter = 0
         val map = object : HashMap<Int, Int>() {
             override fun get(key: Int): Int? {
@@ -46,6 +46,18 @@ class Solution198 {
             max = maxOf(max, current + next)
         }
         return max
+    }
+
+    fun rob(nums: IntArray): Int {
+        var (rob1, rob2) = 0 to 0
+        for (n in nums) {
+            //rob1, rob2, n, n+1
+            val temp = maxOf(rob1 + n, rob2)
+            rob1 = rob2
+            rob2 = temp
+        }
+
+        return rob2
     }
 
     companion object {
