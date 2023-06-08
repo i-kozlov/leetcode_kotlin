@@ -25,15 +25,20 @@ class Solution198 {
         }
 
         val a = maxOf(
-                nums[start] + robMax(nums, start + 2, memo),
-                robMax(nums, start + 1, memo)
+            nums[start] + robMax(nums, start + 2, memo),
+            robMax(nums, start + 1, memo)
         )
         memo[start] = a
         return a
     }
 
 
+    object a {
+        var counter = 0
+    }
+
     private fun robMax2(nums: IntArray, start: Int): Int {
+        a.counter++
         var max = 0
         for (i in start until nums.size) {
             val current = nums[i]
@@ -48,17 +53,13 @@ class Solution198 {
         fun main(args: Array<String>) {
             //add example and check result
             var ans = Solution198().rob(intArrayOf(1, 2, 3, 1))
-            println(ans)
+            println(ans to Solution198().robMax2(intArrayOf(1, 2, 3, 1), 0))
+            println("a.counter " + a.counter)
 
             ans = Solution198().rob(intArrayOf(5, 2, 3, 5))
             println(ans)
 
             ans = Solution198().rob(intArrayOf(5, 2, 3, 5, 1))
-            println(ans)
-
-            ans = Solution198().rob(intArrayOf(5, 2, 3, 5, 1, 2, 3, 5, 1, 2, 3, 5, 1, 2, 3, 5, 1, 1))
-            val arr =(1 .. 21000 ).toList().toIntArray()
-            ans = Solution198().rob(arr)
             println(ans)
 
         }
