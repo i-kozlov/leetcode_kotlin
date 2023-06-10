@@ -5,7 +5,7 @@ import kotlin.math.abs
 
 class Solution219 {
 
-    fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {
+    fun containsNearbyDuplicate_v1(nums: IntArray, k: Int): Boolean {
         val map = mutableMapOf<Int, Int>()
         for (i in 0..nums.lastIndex) {
             val n = nums[i]
@@ -16,6 +16,27 @@ class Solution219 {
             }
             //keep one with max index so future index - mapped index  to be minimal
             map[n] = i
+        }
+
+        return false
+    }
+
+    fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {
+//        val window = mutableSetOf<Int>()
+        val window = LinkedHashSet<Int>()
+
+        //abs(i-j) <= k - keep only k items
+        for (i in 0..nums.lastIndex) {
+            if (window.size >= k) {
+                //remove oldest
+                window.remove(i - k)
+            }
+
+            //same in last k items
+            if(nums[i] in window) return true
+
+            window.add(nums[i])
+
         }
 
         return false
