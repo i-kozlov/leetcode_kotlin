@@ -4,6 +4,27 @@ class Solution338 {
 
     fun countBits(n: Int): IntArray {
         val arr = IntArray(n + 1)
+        var offset = 1
+        for (i in 1..n) {
+            if (offset * 2 == i) {
+                offset = i
+            }
+            arr[i] = arr[i - offset] + 1
+        }
+        return arr
+    }
+
+    fun countBits_v2(n: Int): IntArray {
+        val arr = IntArray(n + 1)
+        for (i in 0..n)
+            arr[i] = arr[i shr 1] + (i and 1)
+
+        return arr
+    }
+
+
+    fun countBits_v1(n: Int): IntArray {
+        val arr = IntArray(n + 1)
         for (i in 0..n)
             arr[i] = hammingWeight(i)
 
@@ -30,6 +51,7 @@ class Solution338 {
             val s = Solution338()
             println(s.countBits(2).joinToString(","))
             println(s.countBits(5).joinToString(","))
+            println(s.countBits(16).joinToString(","))
 
 
         }
