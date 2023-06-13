@@ -7,37 +7,8 @@ class Solution6425 {
 
     fun longestSemiRepetitiveSubstring(s: String): Int {
         var (L, R) = (0 to 0)
-        val window = mutableSetOf<Char>()
-        var maxSize = 0
-        var currentSize = 0
-        var hasDuplicate = false
-        var duplicatePosition = 0
 
-        while (R < s.length) {
-            if (window.add(s[R])) {
-                currentSize++
-
-            } else if (hasDuplicate) {
-                //if repeated
-                while (L <= duplicatePosition) {
-                    window.remove(s[L])
-                    currentSize--
-                    L++
-                }
-                hasDuplicate = false
-                R = L
-
-            } else {
-                hasDuplicate = true
-                duplicatePosition = R
-                currentSize++
-            }
-
-            maxSize = maxOf(maxSize, currentSize)
-            R++
-        }
-
-        return maxSize
+        return 0
     }
 
     companion object {

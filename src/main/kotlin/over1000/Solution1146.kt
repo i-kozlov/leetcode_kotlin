@@ -28,8 +28,7 @@ class SnapshotArray(length: Int) {
 
     fun snap(): Int {
         snapshots[snap_id] = array.clone() as HashMap<Int, Int>
-        snap_id++
-        return snap_id - 1
+        return snap_id++
     }
 
     fun get(index: Int, snap_id: Int): Int {
