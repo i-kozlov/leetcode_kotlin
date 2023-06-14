@@ -20,7 +20,7 @@ class Solution23 {
             tail.next = node
             pointers[idx] = node?.next
 
-            tail = tail.next
+            tail = tail.next!!
         }
 
 

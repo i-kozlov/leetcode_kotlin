@@ -1,24 +1,23 @@
-package other;
+package other
 
-public class ListNode {
-    public final int val;
-    public ListNode next;
+class ListNode {
+    val `val`: Int
+    var next: ListNode? = null
 
-    public ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
+    constructor(`val`: Int, next: ListNode?) {
+        this.`val` = `val`
+        this.next = next
     }
 
-    public ListNode(int val) {
-        this.val = val;
+    constructor(`val`: Int) {
+        this.`val` = `val`
     }
 
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "other.ListNode{" +
-                "val=" + val +
+                "val=" + `val` +
                 ", next=" +
-                ((next != null) ? next.toString() : "") +
-                '}';
+                (if (next != null) next.toString() else "") +
+                '}'
     }
 }
