@@ -13,6 +13,7 @@ import java.util.*;
 */
 public class Randomizer {
 
+    // mapping value to index in list
     private final Map<Integer, Integer> map = new HashMap<>();
     private final List<Integer> list = new ArrayList<>();
 
