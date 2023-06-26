@@ -24,16 +24,19 @@ class Solution219 {
     fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {
         val window = LinkedHashSet<Int>()
 
-        for (i in 0..nums.lastIndex) {
-
-            //same in last k items
-            if (nums[i] in window) return true
-
-            window.add(nums[i])
+        var left = 0
+        for (right in 0..nums.lastIndex) {
             if (window.size > k) {
                 //remove oldest
-                window.remove(nums[i - k])
+                window.remove(nums[left])
+                left++
             }
+
+            //same in last k items
+            if (nums[right] in window) return true
+
+            window.add(nums[right])
+
 
         }
 
