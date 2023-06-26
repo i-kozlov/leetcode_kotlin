@@ -22,20 +22,18 @@ class Solution219 {
     }
 
     fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {
-//        val window = mutableSetOf<Int>()
         val window = LinkedHashSet<Int>()
 
-        //abs(i-j) <= k - keep only k items
         for (i in 0..nums.lastIndex) {
-            if (window.size >= k) {
-                //remove oldest
-                window.remove(i - k)
-            }
 
             //same in last k items
-            if(nums[i] in window) return true
+            if (nums[i] in window) return true
 
             window.add(nums[i])
+            if (window.size > k) {
+                //remove oldest
+                window.remove(nums[i - k])
+            }
 
         }
 
