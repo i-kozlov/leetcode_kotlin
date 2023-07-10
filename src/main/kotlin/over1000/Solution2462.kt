@@ -7,38 +7,34 @@ class Solution2462 {
         var (left, right) = (0 to costs.size - 1)
         var hired = 0
         var cost = 0L
-        val head = PriorityQueue<Int>()
-        val tail = PriorityQueue<Int>()
 
-        var i = 0
-        while (i < candidates && left <= right) {
-            head.add(costs[left++])
-            if (left < right) {
-                tail.add(costs[right--])
-            }
-            i++
+        val headQueue = PriorityQueue<Int>()
+        val tailQueue = PriorityQueue<Int>()
+
+        while (headQueue.size < candidates && left <= right) {
+            headQueue.offer(costs[left++])
+        }
+
+        while (tailQueue.size < candidates && left <= right) {
+            tailQueue.offer(costs[right--])
         }
 
 
-        while (hired < k && !(head.isEmpty() && tail.isEmpty())) {
+        while (hired < k && !(headQueue.isEmpty() && tailQueue.isEmpty())) {
 
             cost += when {
-                head.isEmpty() -> tail.poll()
-                tail.isEmpty() -> head.poll()
-                tail.peek() < head.peek() -> tail.poll()
-                else -> head.poll()
-
+                headQueue.isEmpty() -> tailQueue.poll()
+                tailQueue.isEmpty() -> headQueue.poll()
+                tailQueue.peek() < headQueue.peek() -> tailQueue.poll()
+                else -> headQueue.poll()
             }
 
-
-            if(left <= right && head.size < candidates){
-                head.add(costs[left++])
+            if (left <= right && headQueue.size < candidates) {
+                headQueue.add(costs[left++])
             }
-            if(left <= right && tail.size < candidates){
-                tail.add(costs[right--])
+            if (left <= right && tailQueue.size < candidates) {
+                tailQueue.add(costs[right--])
             }
-
-
 
             hired++
         }

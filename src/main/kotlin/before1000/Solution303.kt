@@ -10,7 +10,7 @@ class Solution303 {
 
         init {
             prefixSums[0] = nums[0]
-            for(i in 1 .. nums.size - 1) {
+            for(i in 1 until nums.size) {
                 prefixSums[i] = prefixSums[i-1] + nums[i]
             }
         }
