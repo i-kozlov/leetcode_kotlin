@@ -1,5 +1,6 @@
 package before1000
 
+import leetcode.problem100_199.Solution190
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

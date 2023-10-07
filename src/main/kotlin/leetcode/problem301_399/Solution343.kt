@@ -1,8 +1,11 @@
 package leetcode.problem301_399
 
+import java.lang.StringBuilder
+
 class Solution343 {
 
     fun integerBreak(n: Int): Int {
+
         var k = 2;
         var max = 0;
         for (i in k..n ) {

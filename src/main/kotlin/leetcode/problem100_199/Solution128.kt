@@ -1,3 +1,5 @@
+package leetcode.problem100_199
+
 class Solution128 {
     fun longestConsecutive(nums: IntArray): Int {
         val set = nums.toSet()

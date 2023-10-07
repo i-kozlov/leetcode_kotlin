@@ -1,3 +1,5 @@
+package leetcode.problem100_199
+
 import other.TreeNode
 //https://leetcode.com/problems/path-sum/
 class Solution112 {

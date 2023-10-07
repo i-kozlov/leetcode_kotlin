@@ -1,3 +1,5 @@
+package leetcode.problem100_199
+
 class Solution125 {
     fun isPalindrome1(s: String): Boolean {
         val normalized = s.filter { it.isLetterOrDigit() }.toLowerCase()

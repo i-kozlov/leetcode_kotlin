@@ -1,6 +1,5 @@
-package s1000
+package leetcode.problem1000_1099
 
-import other.TreeNode
 import java.util.*
 
 class Solution1046 {

@@ -1,3 +1,5 @@
+package leetcode.problem100_199
+
 class Solution167 {
     fun twoSum(numbers: IntArray, target: Int): IntArray {
         var (left, right) = 0 to numbers.lastIndex

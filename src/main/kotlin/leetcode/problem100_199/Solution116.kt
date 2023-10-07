@@ -1,4 +1,4 @@
-package before1000
+package leetcode.problem100_199
 
 import java.util.LinkedList
 
