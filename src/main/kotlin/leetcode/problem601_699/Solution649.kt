@@ -1,39 +1,42 @@
 package leetcode.problem601_699
 
+import java.util.LinkedList
+
 class Solution649 {
     fun predictPartyVictory(senate: String): String {
-        val chars = senate.toCharArray()
+        val senatorsToVote = LinkedList<Char>()
+        val currentVote = LinkedList<Char>()
+        val nextVote = LinkedList<Char>()
 
-        var R = 0
-        var D = 0
-        val first = if (senate[0] == 'D') "Dire" else "Radiant"
+        senate.forEach { senatorsToVote.add(it) }
 
-        while (!isOnePartyRemained(chars)) {
-            for (i in 0..chars.size - 1) {
-                val c = chars[i]
-                if (c == 'D') {
-                    if (R > 0) {
-                        R-- //voice it used to ban
-                        chars[i] = 'B'//banned
-                    } else {
-                        D++
-                    }
-                } else if (c == 'R') {
-                    if (D > 0) {
-                        D--//voice it used to ban
-                        chars[i] = 'B'//banned
-                    } else {
-                        R++
-                    }
+        do {
+            while (senatorsToVote.isNotEmpty()) {
+                val party = senatorsToVote.removeFirst()
+                //no one in queue or same party
+                if (currentVote.isEmpty() || currentVote.peek() == party) {
+                    currentVote.add(party)
+                } else {
+                    //different party
+                    //ban current senator and mark one as voting in next session
+                    nextVote.add(currentVote.poll())
                 }
             }
-        }
-        val char = chars.find { it != 'B' }
+            //fist moving current unused voices
+            while (currentVote.isNotEmpty()) {
+                senatorsToVote.add(currentVote.poll())
+            }
+            currentVote.forEach { senatorsToVote.add(it) }
+            //the all unbanned
+            while (nextVote.isNotEmpty()) {
+                senatorsToVote.add(nextVote.poll())
+            }
+        } while (!isOnePartyRemained(senatorsToVote))
 
-        return if (char == 'D') "Dire" else "Radiant"
+        return if (senatorsToVote.first == 'D') "Dire" else "Radiant"
     }
 
-    private fun isOnePartyRemained(chars: CharArray): Boolean {
+    private fun isOnePartyRemained(chars: List<Char>): Boolean {
         var R = 0
         var D = 0
         for (c in chars) {
