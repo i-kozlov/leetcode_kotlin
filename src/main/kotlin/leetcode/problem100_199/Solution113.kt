@@ -7,17 +7,21 @@ class Solution113 {
         return pathSum(root, targetSum, listOf())
     }
 
-    fun pathSum(root: TreeNode?, targetSum: Int, nodes: List<Int>): List<List<Int>> {
-        if(root == null) return listOf()
+    private fun pathSum(root: TreeNode?, targetSum: Int, pathNodes: List<Int>): List<List<Int>> {
+        if (root == null) return listOf()
 
-        val upd = nodes + (root.`val`)
-        val  isLeaf = root.left == null && root.right == null
-        val left = pathSum(root.left, targetSum, upd)
-        val right = pathSum(root.right, targetSum, upd)
-        if(isLeaf && upd.sum() == targetSum){
-            return listOf(upd)
+        val diff = targetSum - root.`val`
+        val nodes = pathNodes + (root.`val`)
+        val isLeaf = root.left == null && root.right == null
+        return when {
+            !isLeaf -> {
+                val left = pathSum(root.left, diff, nodes)
+                val right = pathSum(root.right, diff, nodes)
+                left + right
+            }
+            diff == 0 -> listOf(nodes)
+            else -> listOf()
         }
-        return left + right
 
     }
 }
