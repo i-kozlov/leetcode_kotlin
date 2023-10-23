@@ -1,4 +1,4 @@
-package over1000
+package leetcode.problem1000_1099
 
 
 class Solution1095 {

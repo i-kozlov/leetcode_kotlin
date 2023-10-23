@@ -1,5 +1,6 @@
 package over1000
 
+import leetcode.problem1000_1099.Solution1095
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
