@@ -4,37 +4,25 @@ class Solution2017 {
 
     fun gridGame(grid: Array<IntArray>): Long {
 
-        val row1 = grid[0].clone()
-        val row2 = grid[1].clone()
 
-        calcPrefixs(row1)
-        calcPrefixs(row2)
+        val row1 = calcPostfix(grid[0])
+        val row2 = calcPrefix(grid[1])
 
         //first robot path
-        val robot1 = pathWithRemoving(arrayOf(row1, row2))
-        //copy zeros
-        for (i in 0..row1.size - 1) {
-            if (row1[i] == 0) {
-                grid[0][i] = 0
-            }
-            if (row2[i] == 0) {
-                grid[1][i] = 0
-            }
-        }
-        calcPrefixs(grid[0])
-        calcPrefixs(grid[1])
+        pathWithRemoving(arrayOf(row1, row2))
 
-        val rightSum = grid[0][1].toLong()
-        val bottomSum = grid[1][0].toLong()
-        return if(rightSum > bottomSum) rightSum else bottomSum
+        val rightMax = row1.max()
+        val bottomMax = row2.max()
+        return Math.max(rightMax, bottomMax)
     }
 
-    private fun pathWithRemoving(grid: Array<IntArray>) {
+    private fun pathWithRemoving(grid: Array<LongArray>) {
 
         var rowNum = 0
         var i = 0
         val size = grid[0].size
         while (i < size) {
+            grid[rowNum][i] = 0
 
             //if on the top row - chooce next row
             //else just keep moving
@@ -43,9 +31,10 @@ class Solution2017 {
                 rowNum++
                 i++ //to stop
             } else if (rowNum == 0) {
-                val rightSum = grid[rowNum][i + 1]
-                val bottomSum = grid[rowNum + 1][i]
-                if (rightSum > bottomSum) {
+
+                val caseGoBottom = grid[0][i + 1] //max sum in row 0 from i + 1 till end
+                val caseGoLeft = grid[1][i] // max sum from left to right in row 1
+                if (caseGoBottom > caseGoLeft) {
                     i++
                 } else {
                     rowNum++
@@ -53,13 +42,25 @@ class Solution2017 {
             } else {
                 i++ //keep moving right
             }
-            grid[rowNum][i] = 0
+
         }
     }
 
-    private fun calcPrefixs(row: IntArray) {
+    private fun calcPostfix(row: IntArray): LongArray {
+        val arr = LongArray(row.size)
+        arr[row.size - 1] = row[row.size - 1].toLong()
         for (i in row.size - 2 downTo 0) {
-            row[i] = row[i] + row[i + 1]
+            arr[i] = row[i] + arr[i + 1]
         }
+        return arr
+    }
+
+    private fun calcPrefix(row: IntArray): LongArray {
+        val arr = LongArray(row.size)
+        arr[0] = row[0].toLong()
+        for (i in 1 until row.size) {
+            arr[i] = arr[i - 1] + row[i]
+        }
+        return arr
     }
 }
