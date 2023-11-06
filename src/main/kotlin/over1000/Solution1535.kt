@@ -10,20 +10,23 @@ class Solution1535 {
         //if k> arr.size - we will loop though all elements anyway
         if (k > arr.size) return arr.max()
 
-        val list = LinkedList<Int>()
-        val winCount = HashMap<Int, Int>()
-        arr.forEach { list.add(it) }
+        var (L, R) = 0 to 1
+        var wins = 0
 
-        while (true) {
-            val idxToMoveBack = if (list[0] > list[1]) 1 else 0
-            list.add(list[idxToMoveBack])
-            list.removeAt(idxToMoveBack)
+        while (R < arr.size) {
+            if (arr[L] > arr[R]) {
+                wins++
+            } else {
+                L = R
+                wins = 1
+            }
 
-            //after moving winner will have idx 0
-            val n = list[0]
-            winCount[n] = winCount.getOrDefault(n, 0) + 1
-            if (winCount[n] == k) return n
+            if (wins == k) {
+                return arr[L]
+            }
+            R++
         }
-        return -1
+        //look like we looped though all item but didn't win enough time with last number - just use it as-is
+        return arr[L]
     }
 }
