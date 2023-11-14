@@ -3,70 +3,36 @@ package over1000
 import java.util.*
 
 class Solution1921 {
-    class Monster(start: Int, val speed: Int) {
-        var dist = start
-
-        fun move() {
-            dist -= speed
-        }
-
-        fun predict(): Int = dist - speed
-        override fun toString(): String {
-            return "Monster(speed=$speed, dist=$dist)"
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            return false
-        }
-
-        override fun hashCode(): Int {
-            var result = speed
-            result = 31 * result + dist
-            return result
-        }
-
-    }
-
     fun eliminateMaximum(dist: IntArray, speed: IntArray): Int {
+
         var killed = 0
+        var shotCharged = 1
         val n = dist.size
 
-        val comparator = Comparator<Monster> { m1, m2 -> m1.predict() compareTo m2.predict() }
-        val heap = PriorityQueue<Monster>(comparator)
-        val treeSet = TreeSet<Monster>(comparator)
+        val arrival = IntArray(n + 1)
         for (i in dist.indices) {
-//            heap.add(Monster(dist[i], speed[i]))
-            treeSet.add(Monster(dist[i], speed[i]))
+            val minutesToCity = dist[i] * 1.0 / speed[i]
+            //if it takes more than n minutes to get to city - can reduce time to n
+            //we can round time up as "if a monster reaches the city at the exact moment the weapon is fully charged, it counts as a loss"
+            val arrivalMinute = if (minutesToCity > n) n else Math.ceil(minutesToCity).toInt()
+            arrival[arrivalMinute] += 1
         }
 
-        while (killed < n) {
+        for (minutesPassed in 1..n) {
 
-            treeSet.first().let {
-                val didNotReach = it.dist > 0
-                if (didNotReach) {
-                    killed++
-                    treeSet.remove(it)
-                } else {
-                    return killed
-                }
+            while (arrival[minutesPassed] > 0 && shotCharged> 0) {
+                arrival[minutesPassed]--
+                shotCharged--
+                killed++
             }
 
-            treeSet.forEach(Monster::move)
-
-//            val head = heap.poll()
-//            killed++
-//
-//            val moved = mutableListOf<Monster>()
-//            while (heap.isNotEmpty()) {
-//                val m = heap.poll()
-//                m.move()
-//                if (m.dist <= 0) return killed
-//                moved.add(m)
-//            }
-//            heap.addAll(moved)
-
+            val lose = arrival[minutesPassed] > 0
+            if (lose) break;
+            //"if a monster reaches the city at the exact moment the weapon is fully charged, it counts as a loss"
+            //so we count as charged only if monster is killed
+            shotCharged++
         }
+
 
         return killed
     }
