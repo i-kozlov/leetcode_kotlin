@@ -1,43 +1,28 @@
-package before100
+package leetcode.problem001_099
 
 class Solution3 {
 
     fun lengthOfLongestSubstring(s: String): Int {
-        if(s.isEmpty()) return 0
+        if (s.isEmpty()) return 0
+        var max = 0
+        var L = 0
         val map = HashMap<Char, Int>()
-        var maxLength = 0
 
-        var currentLength = 0
-        var i = 0
+        var R = 0
         //can add extra condition when current possible max below maxLength
-        while (i < s.length) {
-            val c = s[i]
-            val prevCharLocation = map.put(s[i], i)
-            val newInSeq = prevCharLocation == null
-            if (newInSeq) {
-                i++
-                currentLength++
-            } else {
-                maxLength = maxOf(maxLength, currentLength)
-                //do not increment i to start seq from same letter
-//                i = prevCharLocation!! + 1
-                currentLength = i - prevCharLocation!!
-                i++
+        while (R < s.length) {
+            val c = s[R]
+            val prevCharLocation = map.put(c, R)
+
+            //repeated char
+            if (prevCharLocation != null) {
+                if (L <= prevCharLocation)
+                    L = prevCharLocation + 1
             }
+            max = maxOf(max, R - L + 1)
+            R++
         }
 
-        return maxOf(maxLength, currentLength)
+        return max
     }
-}
-
-fun main() {
-    //add examples
-
-    val s = Solution3()
-    println(s.lengthOfLongestSubstring("abba"))
-    println(s.lengthOfLongestSubstring("dvdf"))
-    println(s.lengthOfLongestSubstring("abcabcbb"))
-    println(s.lengthOfLongestSubstring("bbb"))
-    println(s.lengthOfLongestSubstring("pwwkew"))
-
 }
