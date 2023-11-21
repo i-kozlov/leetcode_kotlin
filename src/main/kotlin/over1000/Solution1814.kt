@@ -17,6 +17,7 @@ class Solution1814 {
             ans += count
             map[it] = count + 1
         }
+
         return (ans % MOD).toInt()
         //return map.map { (_, it) -> it * (it - 1) / 2 }.sum() % MOD
 
